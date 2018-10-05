@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="10dp">
+
+    <ListView android:id="@+id/Usuarios"
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+    </ListView>
+
+    <TextView android:id="@+id/room"
+        android:gravity="center"
+        android:padding="5dp"
+        android:textSize="20sp"
+        android:fontFamily="monospace"
+        android:textColor="@android:color/holo_orange_dark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ListView android:id="@+id/mensajes"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView android:src="@android:drawable/ic_menu_report_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText android:id="@+id/cuerpo"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <Button android:id="@+id/submit"
+            android:text="Enviar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -55,6 +55,7 @@ exports.sendMessageNotification = functions.database.ref("mensajes/{idMensaje}")
                 body: mensaje.cuerpo
             }
         };
+        
         console.log("tashas y perico - enviando notificacion push a ", userRecibe.Nombre);
         return admin.messaging().sendToDevice(userRecibe.token, payload);
     });

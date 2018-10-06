@@ -24,14 +24,14 @@ import java.util.ArrayList;
 public class mensajesAdapter extends ArrayAdapter<mensajePOJO> {
 
     private ArrayList<mensajePOJO> mensajes;
-    private FirebaseUser mFUSER;
-    private usuariosPOJO amigoClicked;
+    private FirebaseUser yo;
+    private String amigoClickedID;
 
-    public mensajesAdapter(@NonNull Context context, ArrayList<mensajePOJO> data, usuariosPOJO amigoClicked) {
+    public mensajesAdapter(@NonNull Context context, ArrayList<mensajePOJO> data, String amigoIDClicked) {
         super(context, 0, data);
         this.mensajes = data;
-        this.amigoClicked = amigoClicked;
-        this.mFUSER = FirebaseAuth.getInstance().getCurrentUser();
+        this.yo = FirebaseAuth.getInstance().getCurrentUser();
+        this.amigoClickedID = amigoIDClicked;
     }
 
     @NonNull
@@ -43,34 +43,33 @@ public class mensajesAdapter extends ArrayAdapter<mensajePOJO> {
 
         final mensajePOJO mensaje = mensajes.get(position);
         final ImageView foto = convertView.findViewById(R.id.photo);
-        TextView mono = convertView.findViewById(R.id.nombre);
+        final TextView mono = convertView.findViewById(R.id.nombre);
         TextView cuerpo = convertView.findViewById(R.id.mensaje);
         TextView fecha = convertView.findViewById(R.id.fecha);
 
-        if(mensaje.UID_DE.equals(mFUSER.getUid())) {
+        if(mensaje.UID_DE.equals(yo.getUid())) {
             mono.setText("tú");
-        }else{
-            mono.setText(amigoClicked.Nombre);
         }
 
         cuerpo.setText(mensaje.cuerpo);
         fecha.setText(mensaje.fechaMSJ);
-        if( mFUSER!= null && mFUSER.getPhotoUrl() != null && mensaje.UID_DE.equals(mFUSER.getUid()) ){
-            Picasso.with(getContext()).load(mFUSER.getPhotoUrl()).into(foto);
+        if( yo!= null && yo.getPhotoUrl() != null && mensaje.UID_DE.equals(yo.getUid()) ){
+            Picasso.with(getContext()).load(yo.getPhotoUrl()).into(foto);
         }else{
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("usuarios");
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("usuarios/"+amigoClickedID);
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        usuariosPOJO USER = child.getValue(usuariosPOJO.class);
-                        if(USER != null && USER.PhotoURL != null && mensaje.UID_DE.equals(USER.UID)){
+                    usuariosPOJO USER = dataSnapshot.getValue(usuariosPOJO.class);
+                    if(USER != null){
+                        if(mensaje.UID_DE.equals(USER.UID)){
+                            mono.setText(USER.Nombre);
+                        }
+                        if(USER.PhotoURL != null && mensaje.UID_DE.equals(USER.UID)){
                             Picasso.with(getContext()).load(USER.PhotoURL).into(foto);
-                            break;
                         }
                     }
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) { }
             });

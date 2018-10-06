@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void CargarInterfaz(){
-        Intent intecion = new Intent(MainActivity.this, Interfaz.class);
+        Intent intecion = new Intent(MainActivity.this, Usuarios.class);
         startActivity(intecion);
         finish();
     }
@@ -55,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
                 //Usuario logeado correctamente
                 CargarInterfaz();
             }else{
-                Toast.makeText(this, "fallo la autenticacion", Toast.LENGTH_SHORT).show();
                 this.recreate();
             }
         }

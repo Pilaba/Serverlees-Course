@@ -19,11 +19,10 @@ import java.util.List;
 public class usuariosAdapter extends ArrayAdapter<usuariosPOJO> {
 
     private List<usuariosPOJO> usuariosData;
-    private FirebaseUser usuario;
 
     public usuariosAdapter(Context context, List<usuariosPOJO> data) {
         super(context, 0, data);
-        usuario = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
         usuariosData = data;
 
         for (usuariosPOJO user : usuariosData) {

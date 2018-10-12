@@ -83,16 +83,13 @@ public class Chat extends AppCompatActivity {
                 if(texto.getText().toString().equals("")){ return; }
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                 mensajePOJO mensaje = new mensajePOJO(
-                        yo.getUid(), userIDclick, texto.getText().toString(), df.format(new Date())
+                        yo.getUid(), userIDclick, texto.getText().toString(), df.format(new Date()), null
                 );
                 DatabaseReference remoteMessage = FirebaseDatabase.getInstance().getReference("mensajes");
                 remoteMessage.push().setValue(mensaje);
                 texto.setText("");
             }
         });
-
-
-
     }
 
     @Override
